@@ -4,25 +4,6 @@ from scipy import spatial
 
 
 
-def lireFichInv(lien):
-    '''
-    dictDoc={}
-    dictReq={}
-    f = open(lien, "r")
-    motCourrant=""
-    for line in f:
-        m=re.search(r"\"(.*)\": {",line)
-        if m is not None:
-            motCourrant=m.group(1)
-        m=re.search(r"\"(.*)\": (.*),",line)
-        if m is not None:
-            testD=re.search(r"D.*",line)
-            if testD is not None:
-                if dictDoc.contains(m.group(1)):
-                [motCourrant]=m.group(2)
-            
-    print(dictDoc)
-    '''
 
 def recherche(dictionnaire,seuil):
     
@@ -30,7 +11,7 @@ def recherche(dictionnaire,seuil):
     dictionnaireInverse={}
     for word in dictionnaire:
         for doc in dictionnaire[word]:
-            if doc not in dictionnaire:
+            if doc not in dictionnaireInverse:
                 dictionnaireInverse[doc]={}
             dictionnaireInverse[doc][word]=dictionnaire[word][doc]
     #print(dictionnaireInverse)
@@ -64,10 +45,13 @@ def recherche(dictionnaire,seuil):
     #Comparaison des vecteurs requêtes aux documents et remplissage du tableau res si la similarité entre les
     #deux est supérieur au seuil fourni
     res={}
-    print(vecteursDocs["D1"],vecteursReq["R1"])
+
     for req in vecteursReq:
         for doc in vecteursDocs:
-            sim=spatial.distance.cosine(vecteursReq[req],vecteursDocs[doc])
+            sim=1-spatial.distance.cosine(vecteursReq[req],vecteursDocs[doc])
+            if(sim>0.01):
+                print(sim)
+                #print((vecteursReq[req],vecteursDocs[doc]))
             if sim>seuil:
                 if req not in res:
                     res[req]={}
@@ -99,6 +83,7 @@ if __name__ == "__main__":
         dictionnaire = json.load(json_file)
     #print(dictionnaire)
     #print(dictionnaire['18']['D1'])
-    recherche(dictionnaire,0)
-    sim=spatial.distance.cosine([0,0,0,0.024650290902159578],[0.09134649426355344, 0, 0, 0.024650290902159578])
-    print(sim)
+    recherche(dictionnaire,0.2)
+    #sim=spatial.distance.cosine([0,0,0,0.024650290902159578],[0.09134649426355344, 0, 0, 0.024650290902159578])
+    #print(1-spatial.distance.cosine([0,0,0,0,0,0,0,1,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1]))
+    #print(sim)
