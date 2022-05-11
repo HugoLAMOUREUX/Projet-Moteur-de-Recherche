@@ -69,8 +69,11 @@ def recherche(dictionnaire,seuil):
                     max=res[req][doc]
                     temp=doc
             if max!=0:
-                fichier.write(req+"   "+temp+"   "+str(max)+"\n")
-                res[req].pop(temp)
+                m=re.match("R(.*)",req)
+                m2=re.match("D(.*)",temp)
+                if(m is not None and m2 is not None):
+                    fichier.write(m.group(1)+"   "+m2.group(1)+"   "+str(max)+"\n")
+                    res[req].pop(temp)
         
     fichier.close()
     
@@ -83,7 +86,7 @@ if __name__ == "__main__":
         dictionnaire = json.load(json_file)
     #print(dictionnaire)
     #print(dictionnaire['18']['D1'])
-    recherche(dictionnaire,0.2)
+    recherche(dictionnaire,0.125)
     #sim=spatial.distance.cosine([0,0,0,0.024650290902159578],[0.09134649426355344, 0, 0, 0.024650290902159578])
     #print(1-spatial.distance.cosine([0,0,0,0,0,0,0,1,1,0,0,0,0,0,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1]))
     #print(sim)
