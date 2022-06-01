@@ -65,7 +65,7 @@ if __name__ == "__main__":
       file = open('CISI.ALLnettoye')
       read = file.read()
       
-      file = open('CISI_dev.QRY')
+      file = open('CISI.QRY')
       read += file.read()
       doc_list=re.split(".I\s\d+",read)
      
